@@ -5,32 +5,40 @@
 #ifndef SNDFILE_EXAMPLE_BITSTREAM_H
 #define SNDFILE_EXAMPLE_BITSTREAM_H
 
+#include <cstdio>
+#include <fstream>
+#include <iostream>
+
+using namespace std;
 
 class BitStream {
 private:
-    char* path;
+    string path;
     unsigned int bitPointer;
 
 public:
-    BitStream(char* path, unsigned int bitPointer) : BitStream(path) {
+    BitStream(string path, unsigned int bitPointer) {
         this->path = path;
         this->bitPointer = bitPointer;
     }
 
-    BitStream(char* path) : BitStream(path, 0){}
+    BitStream(string path) : BitStream(path, 0) {}
 
     unsigned char readBit() {
         char res;
         ifstream infile;
         infile.open(path);
         infile.seekg(bitPointer>>3); // basically the same as bitPointer/8, just faster maybe?
-        if (infile.get(res)) {
-            res >>= (7 - (bitPointer % 8));
+        if (infile >> res) {
+            res >>= 7 - (bitPointer % 8);
             res &= 0b00000001;
-        }
         infile.close();
         bitPointer++;
         return res;
+    }
+
+    void writeBit(unsigned char bit) {
+
     }
 
     void setBitPointer(unsigned int bit) {
