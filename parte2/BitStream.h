@@ -40,6 +40,29 @@ public:
         return res;
     }
 
+    vector<unsigned char> readNBits(unsigned int n) {
+        vector<unsigned char> res;
+        char c;
+        int m = n;
+        ifstream infile;
+        infile.open(path);
+        infile.seekg(bitPointer>>3);
+        for (unsigned int i = 0; i < n/8; i++) {
+            if (infile >> c) {
+                for (unsigned int j = 0; j < min(8,m); j++) {
+                    char ch = c;
+                    ch >>= 7 - (bitPointer % 8);
+                    ch &= 0b00000001;
+                    res.push_back(ch);
+                    bitPointer++;
+                }
+                m -= 8;
+            }
+        }
+        infile.close();
+        return res;
+    }
+
     void writeBit(unsigned char bit) {
         bit &= 0b00000001;
         buffer.push_back(bit);
@@ -55,7 +78,7 @@ public:
         }
     }
 
-    void setBitPointer(unsigned int bit) {
+    void setReadPointer(unsigned int bit) {
         bitPointer = bit;
     }
 };
