@@ -47,16 +47,15 @@ public:
         ifstream infile;
         infile.open(path);
         infile.seekg(bitPointer>>3);
-        for (unsigned int i = 0; i < n/8; i++) {
+        for (unsigned int i = 0; i <= n/8; i++, m-=8) {
             if (infile >> c) {
-                for (unsigned int j = 0; j < min(8,m); j++) {
+                unsigned int numBitsToRead = min(8,m);
+                for (unsigned int j = 0; j < numBitsToRead; j++) {
                     char ch = c;
                     ch >>= 7 - (bitPointer % 8);
-                    ch &= 0b00000001;
-                    res.push_back(ch);
+                    res.push_back(ch & 0b00000001);
                     bitPointer++;
                 }
-                m -= 8;
             }
         }
         infile.close();
@@ -64,18 +63,52 @@ public:
     }
 
     void writeBit(unsigned char bit) {
-        bit &= 0b00000001;
-        buffer.push_back(bit);
+        buffer.push_back(bit & 0b00000001);
         if (buffer.size() >= 8) {
             char res = 0;
             for (unsigned int i = 0; i < 8; i++) {
-                res += (buffer[i] << (7-i));
+                res |= (buffer[i] << (7-i));
             }
+            buffer.clear();
             ofstream outfile;
             outfile.open(path, ios::out | ios::app);
             outfile << res;
             outfile.close();
         }
+    }
+
+    void writeNBits(vector<unsigned char> bits) {
+        ofstream outfile;
+        outfile.open(path, ios::out | ios::app);
+        for (auto bit: bits) {
+            buffer.push_back(bit & 0b00000001);
+            if (buffer.size() >= 8) {
+                char res = 0;
+                for (unsigned int i = 0; i < 8; i++) {
+                    res |= (buffer[i] << (7 - i));
+                }
+                buffer.clear();
+                outfile << res;
+            }
+        }
+        outfile.close();
+    }
+
+    void writeNBits(string bits) {
+        ofstream outfile;
+        outfile.open(path, ios::out | ios::app);
+        for (auto bit: bits) {
+            buffer.push_back(bit & 0b00000001);
+            if (buffer.size() >= 8) {
+                char res = 0;
+                for (unsigned int i = 0; i < 8; i++) {
+                    res |= (buffer[i] << (7 - i));
+                }
+                buffer.clear();
+                outfile << res;
+            }
+        }
+        outfile.close();
     }
 
     void setReadPointer(unsigned int bit) {
