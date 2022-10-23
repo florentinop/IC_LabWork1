@@ -5,21 +5,28 @@
 #include "BitStream.h"
 #include <iostream>
 
+void readBits(BitStream rd, int n) {
+    vector<unsigned char> bitsRead = rd.readNBits(n);
+    for (auto c : bitsRead)
+        cout << (int)c;
+}
+
 int main() {
     BitStream readStream {"in.txt"};
     BitStream writeStream {"out.txt"};
+    // readBits(readStream,16);
 
-    vector<unsigned char> bitsRead = readStream.readNBits(8);
-    for (auto c: bitsRead) {
-        cout << c;
-    }
-    unsigned char bit = readStream.readBit();
-    cout << bit;
+    vector<unsigned char> chars = {'o','l','a'};
+    writeStream.writeNBits(chars);
+    readBits(writeStream,24);
 
-    writeStream.writeNBits(bitsRead);
-    writeStream.writeBit(bit);
+    
+    // cout << bit;
 
-    writeStream.writeNBits(readStream.readNBits(8));
+    // writeStream.writeNBits(bitsRead);
+    // writeStream.writeBit(bit);
+
+    // writeStream.writeNBits(readStream.readNBits(8));
 
     return 0;
 }

@@ -31,7 +31,7 @@ public:
         ifstream infile;
         infile.open(path);
         infile.seekg(bitPointer>>3); // basically the same as bitPointer/8, just faster maybe?
-        if (infile >> res) {
+        if (infile.get(res)) {
             res >>= 7 - (bitPointer % 8);
             res &= 0b00000001;
         }
@@ -48,7 +48,7 @@ public:
         infile.open(path);
         infile.seekg(bitPointer>>3);
         for (unsigned int i = 0; i <= n/8; i++, m-=8) {
-            if (infile >> c) {
+            if (infile.get(c)) { 
                 unsigned int numBitsToRead = min(8,m);
                 for (unsigned int j = 0; j < numBitsToRead; j++) {
                     char ch = c;
