@@ -27,16 +27,27 @@ public:
     BitStream(string path) : BitStream(path, 0) {}
 
     unsigned char readBit() {
-        char res;
+        char res = EOF;
+        
         ifstream infile;
         infile.open(path);
         infile.seekg(bitPointer>>3); // basically the same as bitPointer/8, just faster maybe?
         if (infile.get(res)) {
+            if(res=='0'){
+                res=0;
+            }
+            if(res=='1'){
+                res=1;
+            }
             res >>= 7 - (bitPointer % 8);
             res &= 0b00000001;
+            bitPointer++;
         }
+
+        
+        
         infile.close();
-        bitPointer++;
+        
         return res;
     }
 
@@ -63,7 +74,8 @@ public:
     }
 
     void writeBit(unsigned char bit) {
-        buffer.push_back(bit & 0b00000001);
+        
+        buffer.push_back(bit);
         if (buffer.size() >= 8) {
             char res = 0;
             for (unsigned int i = 0; i < 8; i++) {
@@ -72,6 +84,29 @@ public:
             buffer.clear();
             ofstream outfile;
             outfile.open(path, ios::out | ios::app);
+            
+            outfile << res;
+            outfile.close();
+        }
+    }
+
+    void writeChar(unsigned char bit) {
+        
+        buffer.push_back(bit);
+        if (buffer.size() >= 8) {
+            char res = 0;
+            for (unsigned int i = 0; i < 8; i++) {
+                res |= (buffer[i] << (7-i));
+            }
+            buffer.clear();
+            ofstream outfile;
+            outfile.open(path, ios::out | ios::app);
+            if(res==0){
+            res='0';
+            }
+            if(res==1){
+                res='1';
+            }
             outfile << res;
             outfile.close();
         }

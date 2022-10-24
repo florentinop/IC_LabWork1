@@ -1,0 +1,8 @@
+/home/osboxes/Desktop/IC_ENTREGA/parte1/sndfile-example-src/build/CMakeFiles/rebuild_cache.dir
+/home/osboxes/Desktop/IC_ENTREGA/parte1/sndfile-example-src/build/CMakeFiles/edit_cache.dir
+/home/osboxes/Desktop/IC_ENTREGA/parte1/sndfile-example-src/build/CMakeFiles/wav_effects.dir
+/home/osboxes/Desktop/IC_ENTREGA/parte1/sndfile-example-src/build/CMakeFiles/wav_cmp.dir
+/home/osboxes/Desktop/IC_ENTREGA/parte1/sndfile-example-src/build/CMakeFiles/wav_quant.dir
+/home/osboxes/Desktop/IC_ENTREGA/parte1/sndfile-example-src/build/CMakeFiles/wav_dct.dir
+/home/osboxes/Desktop/IC_ENTREGA/parte1/sndfile-example-src/build/CMakeFiles/wav_hist.dir
+/home/osboxes/Desktop/IC_ENTREGA/parte1/sndfile-example-src/build/CMakeFiles/wav_cp.dir

@@ -11,22 +11,46 @@ void readBits(BitStream rd, int n) {
         cout << (int)c;
 }
 
-int main() {
-    BitStream readStream {"in.txt"};
-    BitStream writeStream {"out.txt"};
-    // readBits(readStream,16);
+void encode(string text, string bin){
+    BitStream readStream {text};
+    BitStream writeStream {bin};
 
-    vector<unsigned char> chars = {'o','l','a'};
-    writeStream.writeNBits(chars);
-    readBits(writeStream,24);
+    char c = ' ';
+    while(1){
+        c = readStream.readBit();
+        if(c == EOF)
+            break;
+        
+        writeStream.writeBit(c);
+    }
+}
 
+void decode(string bin, string text){
+    BitStream readStream {bin};
+    BitStream writeStream {text};
+
+    char c = ' ';
+    while(1){
+        c = readStream.readBit();
+        if(c == EOF)
+            break;
+        
+        writeStream.writeChar(c);
+    }
+}
+
+
+
+int main(int argc, char *argv[]) {
+
+    if(argc < 3) {
+		cerr << "Usage: " << argv[0] << " <text file> <binary file>\n";
+		return 1;
+	}
+
+    encode(argv[1],argv[2]);
     
-    // cout << bit;
-
-    // writeStream.writeNBits(bitsRead);
-    // writeStream.writeBit(bit);
-
-    // writeStream.writeNBits(readStream.readNBits(8));
+    
 
     return 0;
 }

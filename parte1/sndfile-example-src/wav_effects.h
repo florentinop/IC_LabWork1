@@ -44,9 +44,9 @@ class WAVEffects {
 	void ApplyMultipleEchoes(short k, double alpha) {
 		MultipleEchoSamples.push_back(Samples[0]);
 		MultipleEchoSamples.push_back(Samples[1]);
-		for (size_t i = 3; i < Samples.size(); i++){
-			MultipleEchoSamples.push_back(Samples[i-1] + alpha * MultipleEchoSamples[i-3]); // left channel
-			MultipleEchoSamples.push_back(Samples[i] + alpha * MultipleEchoSamples[i-2]);	// right channel
+		for (size_t i = 3; i < Samples.size(); i=i+2){
+			MultipleEchoSamples.push_back(((Samples[i-1] + alpha * MultipleEchoSamples[i-3]))/(1+ alpha)); // left channel
+			MultipleEchoSamples.push_back(((Samples[i] + alpha * MultipleEchoSamples[i-2]))/(1+ alpha));	// right channel
 		}
 	}
 
