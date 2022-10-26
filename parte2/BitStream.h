@@ -16,7 +16,7 @@ class BitStream {
 private:
     string path;
     unsigned int bitPointer;
-    vector<unsigned char> buffer;
+    vector<char> buffer;
 
 public:
     BitStream(string path, unsigned int bitPointer) {
@@ -26,8 +26,7 @@ public:
 
     BitStream(string path) : BitStream(path, 0) {}
 
-    unsigned char readBit() {
-<<<<<<< HEAD
+    char readBit() {
         char res = '2';
         ifstream infile;
         infile.open(path);
@@ -45,8 +44,8 @@ public:
         return res;
     }
 
-    vector<unsigned char> readBits(unsigned int n) {
-        vector<unsigned char> res;
+    vector<char> readBits(unsigned int n) {
+        vector<char> res;
         char c;
         int m = n;
         ifstream infile;
@@ -70,7 +69,7 @@ public:
         return res;
     }
 
-    void writeBit(unsigned char bit) {
+    void writeBit(char bit) {
         
         buffer.push_back(bit);
         if (buffer.size() >= 8) {
@@ -87,7 +86,7 @@ public:
         }
     }
 
-    void writeChar(unsigned char bit) {
+    void writeChar(char bit) {
         
         buffer.push_back(bit);
         if (buffer.size() >= 8) {
@@ -109,7 +108,7 @@ public:
         }
     }
 
-    void writeBits(vector<unsigned char> bits) {
+    void writeBits(vector<char> bits) {
         ofstream outfile;
         outfile.open(path, ios::out | ios::app);
         for (auto bit: bits) {
