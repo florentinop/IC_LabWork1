@@ -36,17 +36,23 @@ int main(int argc, char *argv[]) {
 
 	size_t nFrames;
 	vector<short> samples(FRAMES_BUFFER_SIZE * sndFile.channels());
+
+	short nbits=15;
 	
 	WAVQuant quant { sndFile };
 	while((nFrames = sndFile.readf(samples.data(), FRAMES_BUFFER_SIZE))) {
 		samples.resize(nFrames * sndFile.channels());
-		quant.quantize(samples,14); //reduce to x bits
+		quant.quantize(samples,nbits); //reduce to x bits
 		
 	}
 
 	
 	vector<short> QuantizedSamples = quant.getQuantizedSamples();
 	outFile.writef(QuantizedSamples.data(), sndFile.frames());
+
+
+	// DIOGO
+	// outFile.writef(quant.quantize(nbits).data(), sndFile.frames());
 	
 	
 

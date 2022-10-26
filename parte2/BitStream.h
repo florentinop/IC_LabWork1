@@ -27,6 +27,7 @@ public:
     BitStream(string path) : BitStream(path, 0) {}
 
     unsigned char readBit() {
+<<<<<<< HEAD
         char res = '2';
         ifstream infile;
         infile.open(path);
@@ -37,7 +38,10 @@ public:
             bitPointer++;
             res = (res == 1 ? '1' : '0');
         }
+
+        
         infile.close();
+        
         return res;
     }
 
@@ -49,7 +53,7 @@ public:
         infile.open(path);
         infile.seekg(bitPointer>>3);
         for (unsigned int i = 0; i <= n/8; i++, m-=8) {
-            if (infile >> c) {
+            if (infile.get(c)) { 
                 unsigned int numBitsToRead = min(8,m);
                 for (unsigned int j = 0; j < numBitsToRead; j++) {
                     char ch = c;
@@ -67,7 +71,8 @@ public:
     }
 
     void writeBit(unsigned char bit) {
-        buffer.push_back(bit & 0b00000001);
+        
+        buffer.push_back(bit);
         if (buffer.size() >= 8) {
             char res = 0;
             for (unsigned int i = 0; i < 8; i++) {
@@ -76,6 +81,29 @@ public:
             buffer.clear();
             ofstream outfile;
             outfile.open(path, ios::out | ios::app);
+            
+            outfile << res;
+            outfile.close();
+        }
+    }
+
+    void writeChar(unsigned char bit) {
+        
+        buffer.push_back(bit);
+        if (buffer.size() >= 8) {
+            char res = 0;
+            for (unsigned int i = 0; i < 8; i++) {
+                res |= (buffer[i] << (7-i));
+            }
+            buffer.clear();
+            ofstream outfile;
+            outfile.open(path, ios::out | ios::app);
+            if(res==0){
+            res='0';
+            }
+            if(res==1){
+                res='1';
+            }
             outfile << res;
             outfile.close();
         }

@@ -49,9 +49,9 @@ int main(int argc, char *argv[]) {
 		hist.updateSIDE(samples);
 	}
 
-	//hist.dump(channel);
-	//hist.dumpMID();
-	//hist.dumpSIDE();
+	// hist.dump(channel);
+	// hist.dumpMID();
+	hist.dumpSIDE();
 
 
 	return 0;

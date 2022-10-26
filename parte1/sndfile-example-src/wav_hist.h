@@ -41,32 +41,6 @@ class WAVHist {
 		}
 	}
 
-	/* void dumpMID() {
-
-		auto left = counts[0].begin();
-		auto right = counts[1].begin();
-
-		while (left != counts[0].end())
-		{
-			std::cout << left->first << '\t' << (left->second + right->second)/2 <<'\n';
-			left++;
-			right++;
-		}
-	}
-
-	void dumpSIDE() {
-
-		auto left = counts[0].begin();
-		auto right = counts[1].begin();
-
-		while (left != counts[0].end())
-		{
-			std::cout << left->first << '\t' << ((int)left->second - (int)right->second)/2 <<'\n';
-			left++;
-			right++;
-		}
-	} */
-
 	void dump(const size_t channel) const {
 		for(auto [value, counter] : counts[channel])
 			std::cout << value << '\t' << counter << '\n';

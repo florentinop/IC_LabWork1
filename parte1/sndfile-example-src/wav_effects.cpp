@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 	SndfileHandle MEFile { "MultipleEcho.wav", SFM_WRITE, sndFile_original.format(), sndFile_original.channels(),sndFile_original.samplerate()};
 	
 	SEFile.writef(single_echo_samples.data(), sndFile_original.frames()+k);
-	MEFile.writef(single_echo_samples.data(), sndFile_original.frames()+1);
+	MEFile.writef(multiple_echo_samples.data(), sndFile_original.frames()+1);
 
 
 
