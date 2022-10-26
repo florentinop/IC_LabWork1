@@ -27,20 +27,21 @@ public:
     BitStream(string path) : BitStream(path, 0) {}
 
     unsigned char readBit() {
-        char res;
+        char res = '2';
         ifstream infile;
         infile.open(path);
-        infile.seekg(bitPointer>>3); // basically the same as bitPointer/8, just faster maybe?
+        infile.seekg(bitPointer>>3); // bitPointer/8
         if (infile >> res) {
             res >>= 7 - (bitPointer % 8);
             res &= 0b00000001;
+            bitPointer++;
+            res = (res == 1 ? '1' : '0');
         }
         infile.close();
-        bitPointer++;
         return res;
     }
 
-    vector<unsigned char> readNBits(unsigned int n) {
+    vector<unsigned char> readBits(unsigned int n) {
         vector<unsigned char> res;
         char c;
         int m = n;
@@ -53,9 +54,12 @@ public:
                 for (unsigned int j = 0; j < numBitsToRead; j++) {
                     char ch = c;
                     ch >>= 7 - (bitPointer % 8);
-                    res.push_back(ch & 0b00000001);
+                    ch &= 0b00000001;
+                    res.push_back(ch == 1 ? '1' : '0');
                     bitPointer++;
                 }
+            } else {
+                res.push_back('2');
             }
         }
         infile.close();
@@ -77,7 +81,7 @@ public:
         }
     }
 
-    void writeNBits(vector<unsigned char> bits) {
+    void writeBits(vector<unsigned char> bits) {
         ofstream outfile;
         outfile.open(path, ios::out | ios::app);
         for (auto bit: bits) {
@@ -94,7 +98,7 @@ public:
         outfile.close();
     }
 
-    void writeNBits(string bits) {
+    void writeBits(string bits) {
         ofstream outfile;
         outfile.open(path, ios::out | ios::app);
         for (auto bit: bits) {
