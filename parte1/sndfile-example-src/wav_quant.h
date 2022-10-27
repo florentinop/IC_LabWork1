@@ -41,7 +41,7 @@ class WAVQuant {
 
     std::vector<short> quantize(short numBits) {
         std::vector<short> res(samples.size());
-        int delta = (int) pow(2, 16 - bits);
+        int delta = (int) pow(2, 16 - numBits);
         for (unsigned long i = 0; i < samples.size(); i++) {
             if (samples[i] % delta >= delta / 2) {
                 res[i] = delta*(1+samples[i]/delta);

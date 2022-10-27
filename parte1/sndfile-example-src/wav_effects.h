@@ -42,12 +42,23 @@ class WAVEffects {
 	}
 
 	void ApplyMultipleEchoes(short k, double alpha) {
-		MultipleEchoSamples.push_back(Samples[0]);
-		MultipleEchoSamples.push_back(Samples[1]);
-		for (size_t i = 3; i < Samples.size(); i=i+2){
-			MultipleEchoSamples.push_back(((Samples[i-1] + alpha * MultipleEchoSamples[i-3]))/(1+ alpha)); // left channel
-			MultipleEchoSamples.push_back(((Samples[i] + alpha * MultipleEchoSamples[i-2]))/(1+ alpha));	// right channel
+	
+		for (int i = 3; i < Samples.size(); i=i+2){
+			
+			if(i-3-k < 0 || i-2-k<0){
+				MultipleEchoSamples.push_back(Samples[i-3]);
+				MultipleEchoSamples.push_back(Samples[i-2]);
+				continue;
+			}
+
+			MultipleEchoSamples.push_back(((Samples[i-1] + alpha * MultipleEchoSamples[i-3-k]))/(1+ alpha)); // left channel
+			MultipleEchoSamples.push_back(((Samples[i] + alpha * MultipleEchoSamples[i-2-k]))/(1+ alpha));	// right channel
 		}
+
+		for(size_t i = 0; i < k*2; i++)
+			MultipleEchoSamples.push_back(0);
+
+		
 	}
 
 	std::vector<short> GetSingleEchoSamples() {
