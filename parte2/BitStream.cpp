@@ -5,11 +5,11 @@
 #include "BitStream.h"
 #include <iostream>
 
-void readBits(BitStream rd, int n) {
-    vector<unsigned char> bitsRead = rd.readNBits(n);
-    for (auto c : bitsRead)
-        cout << (int)c;
-}
+// void readBits(BitStream rd, int n) {
+//     vector<unsigned char> bitsRead = rd.readBits(n);
+//     for (auto c : bitsRead)
+//         cout << (int)c;
+// }
 
 void encode(string text, string bin){
     BitStream readStream {text};

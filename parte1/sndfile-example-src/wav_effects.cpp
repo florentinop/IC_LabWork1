@@ -11,7 +11,7 @@ constexpr size_t FRAMES_BUFFER_SIZE = 65536; // Buffer for reading frames
 int main(int argc, char *argv[]) {
 
 	if(argc < 2) {
-		cerr << "Usage: " << argv[0] << " <original file>\n";
+		cerr << "Usage: " << argv[0] << " <file>\n";
 		return 1;
 	}
 

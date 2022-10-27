@@ -3,6 +3,25 @@ To build:
 
 To test:
 	../sndfile-example-bin/wav_cp sample.wav copy.wav // copies "sample.wav" into "copy.wav"
-	../sndfile-example-bin/wav_hist sample.wav 0 // outputs the histogram of channel 0 (left)
+
+	../sndfile-example-bin/wav_hist sample.wav 0 normal // outputs the histogram of channel 0 (left)
+	../sndfile-example-bin/wav_hist sample.wav 0 mid // outputs the histogram of mid channel (mono)
+	../sndfile-example-bin/wav_hist sample.wav 0 side // outputs the histogram of side channel (side)
+
 	../sndfile-example-bin/wav_dct sample.wav out.wav // generates a DCT "compressed" version
+
+	../sndfile-example-bin/wav_quant sample.wav shifting 15 // generates a "reduced.wav" file using the shifting method 
+															// where samples are represented by 15 bits
+	../sndfile-example-bin/wav_quant sample.wav rounding 4  // generates a "reduced.wav" file using the rounding method 
+															// where samples are represented by 4 bits
+
+	../sndfile-example-bin/wav_cmp sample.wav reduced.wav   // Computes SNR between the audio signals from sample.wav and reduced.wav 
+															// includes maximum per sample error
+
+	../sndfile-example-bin/wav_effects sample.wav		    // generates "SingleEcho.wav" and "MultipleEcho.wav" files
+															// each one including its corresponding echo effect based on sample.wav	
+
+																		
+							
+
 

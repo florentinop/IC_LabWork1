@@ -30,7 +30,6 @@ class WAVQuant {
 	}
 
 	void quantize(const std::vector<short>& samples, int nbits) {
-		//int delta = 65536 / pow(2, nbits);
 		for(short s : samples){
 			this->samples.push_back(s);
 			QuantizedSamples.push_back((s >> (16-nbits)) << (16-nbits));	

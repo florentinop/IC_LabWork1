@@ -4,4 +4,6 @@ all:
 
 clean:
 	rm -rf BitStream
+	rm -rf Decoder
+	rm -rf Encoder
 	rm -r build

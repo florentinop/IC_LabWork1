@@ -13,6 +13,12 @@ SET (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BASE_DIR})
 
 add_executable (BitStream BitStream.cpp)
 
+add_executable (Encoder Encoder.cpp)
+
+add_executable (Decoder Decoder.cpp)
+
+
+
 
 
 

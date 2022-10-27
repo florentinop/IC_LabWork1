@@ -27,23 +27,23 @@ class WAVEffects {
 
 	void ApplySingleEcho(short k, double alpha) {
 
-		for(size_t i = 0; i < k*2; i++)
+		for(short i = 0; i < k*2; i++)
 			SingleEchoSamples.push_back(0);	//apply delay
 
 		for(short s : Samples)			//copy and reduce intensity by alpha
 			SingleEchoSamples.push_back(s*alpha);
 
-		for(size_t i = 0; i < k*2; i++)
+		for(short i = 0; i < k*2; i++)
 			Samples.push_back(0);	// add space for the delay
 
-		for(size_t i = 0; i<Samples.size(); i++)
+		for(short i = 0; i<(short)Samples.size(); i++)
 			SingleEchoSamples[i] = (SingleEchoSamples[i] + Samples[i]) / (1+alpha);	//add signals and divide by 1+alpha so that we never saturate the signal
 																	// 1+alpha is the worst case  
 	}
 
 	void ApplyMultipleEchoes(short k, double alpha) {
 	
-		for (int i = 3; i < Samples.size(); i=i+2){
+		for (int i = 3; i < (int)Samples.size(); i=i+2){
 			
 			if(i-3-k < 0 || i-2-k<0){
 				MultipleEchoSamples.push_back(Samples[i-3]);
@@ -55,7 +55,7 @@ class WAVEffects {
 			MultipleEchoSamples.push_back(((Samples[i] + alpha * MultipleEchoSamples[i-2-k]))/(1+ alpha));	// right channel
 		}
 
-		for(size_t i = 0; i < k*2; i++)
+		for(int i = 0; i < k*2; i++)
 			MultipleEchoSamples.push_back(0);
 
 		
