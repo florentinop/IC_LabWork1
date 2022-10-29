@@ -27,7 +27,7 @@ public:
     BitStream(string path) : BitStream(path, 0) {}
 
     char readBit() {
-        char res = '2';
+        char res = -1;
         ifstream infile;
         infile.open(path);
         infile.seekg(bitPointer>>3); // bitPointer/8
@@ -35,33 +35,30 @@ public:
             res >>= 7 - (bitPointer % 8);
             res &= 0b00000001;
             bitPointer++;
-            res = (res == 1 ? '1' : '0');
         }
-
         infile.close();
-        
         return res;
     }
 
     vector<char> readBits(unsigned int n) {
         vector<char> res;
-        char c;
+        char c = -1;
         int m = n;
         ifstream infile;
         infile.open(path);
         infile.seekg(bitPointer>>3);
         for (unsigned int i = 0; i <= n/8; i++, m-=8) {
-            if (infile.get(c)) { 
+            if (infile >> c) {
                 unsigned int numBitsToRead = min(8,m);
                 for (unsigned int j = 0; j < numBitsToRead; j++) {
                     char ch = c;
                     ch >>= 7 - (bitPointer % 8);
                     ch &= 0b00000001;
-                    res.push_back(ch == 1 ? '1' : '0');
+                    res.push_back(ch);
                     bitPointer++;
                 }
             } else {
-                res.push_back('2');
+                res.push_back(-1);
             }
         }
         infile.close();
