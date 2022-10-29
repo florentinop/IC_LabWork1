@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 	bool verbose { false };
 	size_t bs { 1024 };
 	double dctFrac { 0.2 };
-	short bits { 8 };
+    short bits { 16 };
 
 	if(argc < 3) {
 		cerr << "Usage: wav_encoder [ -v (verbose) ]\n";
@@ -48,6 +48,10 @@ int main(int argc, char *argv[]) {
     for(int n = 1 ; n < argc ; n++) {
         if (string(argv[n]) == "-b") {
             bits = atof(argv[n + 1]);
+            if (bits > 16 || bits < 1) {
+                cerr << "Error: bits must be between 1 and 16\n";
+                return 1;
+            }
             break;
         }
     }
@@ -124,30 +128,36 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    std::vector<short> res(samples.size());
-    int delta = (int) pow(2, 16 - bits);
-    for (unsigned long i = 0; i < samples.size(); i++) {
-        if (samples[i] % delta >= delta / 2) {
-            res[i] = delta*(1+samples[i]/delta);
-        } else {
-            res[i] = samples[i] - (samples[i] % delta);
-        }
-    }
-
     BitStream writeStream {argv[argc-1]};
 
     writeStream.writeBit(nChannels == 2 ? 1 : 0); // first bit of the file will be the number of channels
-                                                      // (nChannels = 2^bit)
 
     // then, write samplerate
     writeStream.writeBits(bitset<23>(sfhIn.samplerate()).to_string());
 
     const clock_t begin = clock();
 
-    // finally, write samples data
-    for (auto re: res) {
-        writeStream.writeBits(bitset<8>(re >> 8).to_string());
-    }
+	if (bits != 16) {
+        std::vector<short> res(samples.size());
+        int delta = (int) pow(2, 16 - bits);
+        for (unsigned long i = 0; i < samples.size(); i++) {
+            if (samples[i] % delta >= delta / 2) {
+                res[i] = delta * (1 + samples[i] / delta);
+            } else {
+                res[i] = samples[i] - (samples[i] % delta);
+            }
+        }
+
+        // finally, write samples data
+        for (auto re: res) {
+            string tmp = bitset<16>(re >> (16 - bits)).to_string();
+            writeStream.writeBits(tmp.substr(tmp.size()-bits, tmp.size()));
+        }
+    } else {
+	    for (auto sample: samples) {
+	        writeStream.writeBits(bitset<16>(sample).to_string());
+	    }
+	}
 
     cout << "Time in seconds: ";
     cout << float(clock() - begin) / CLOCKS_PER_SEC << '\n';
