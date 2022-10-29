@@ -1,3 +1,0 @@
-/home/osboxes/Desktop/IC_ENTREGA/parte2/build/CMakeFiles/rebuild_cache.dir
-/home/osboxes/Desktop/IC_ENTREGA/parte2/build/CMakeFiles/edit_cache.dir
-/home/osboxes/Desktop/IC_ENTREGA/parte2/build/CMakeFiles/BitStream.dir

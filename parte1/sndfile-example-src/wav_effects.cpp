@@ -11,7 +11,7 @@ constexpr size_t FRAMES_BUFFER_SIZE = 65536; // Buffer for reading frames
 int main(int argc, char *argv[]) {
 
 	if(argc < 2) {
-		cerr << "Usage: " << argv[0] << " <original file>\n";
+		cerr << "Usage: " << argv[0] << " <file>\n";
 		return 1;
 	}
 
@@ -44,10 +44,11 @@ int main(int argc, char *argv[]) {
 		eff.update(original_samples);
 	}
 
-	short k = 4410;
+	short k1 = 4410;
+	short k2 = 4410*3;
 	double alpha = 0.8;
-	eff.ApplySingleEcho(k, alpha); 
-	eff.ApplyMultipleEchoes(k,alpha);
+	eff.ApplySingleEcho(k1, alpha); 
+	eff.ApplyMultipleEchoes(k2,alpha);
 
 	vector<short> single_echo_samples = eff.GetSingleEchoSamples();
 	vector<short> multiple_echo_samples = eff.GetMultipleEchoSamples();
@@ -55,8 +56,8 @@ int main(int argc, char *argv[]) {
 	SndfileHandle SEFile { "SingleEcho.wav", SFM_WRITE, sndFile_original.format(), sndFile_original.channels(),sndFile_original.samplerate()};
 	SndfileHandle MEFile { "MultipleEcho.wav", SFM_WRITE, sndFile_original.format(), sndFile_original.channels(),sndFile_original.samplerate()};
 	
-	SEFile.writef(single_echo_samples.data(), sndFile_original.frames()+k);
-	MEFile.writef(multiple_echo_samples.data(), sndFile_original.frames()+1);
+	SEFile.writef(single_echo_samples.data(), sndFile_original.frames()+k1);
+	MEFile.writef(multiple_echo_samples.data(), sndFile_original.frames()+k2);
 
 
 

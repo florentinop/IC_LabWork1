@@ -11,12 +11,12 @@ constexpr size_t FRAMES_BUFFER_SIZE = 65536; // Buffer for reading frames
 
 int main(int argc, char *argv[]) {
 
-	if(argc < 3) {
-		cerr << "Usage: " << argv[0] << " <input file> <channel>\n";
+	if(argc < 4) {
+		cerr << "Usage: " << argv[0] << " <input file> <channel> <mode> mode={normal,mid,side}\n";
 		return 1;
 	}
 
-	SndfileHandle sndFile { argv[argc-2] };
+	SndfileHandle sndFile { argv[argc-3] };
 	if(sndFile.error()) {
 		cerr << "Error: invalid input file\n";
 		return 1;
@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	int channel { stoi(argv[argc-1]) };
+	int channel { stoi(argv[argc-2]) };
 	if(channel >= sndFile.channels()) {
 		cerr << "Error: invalid channel requested\n";
 		return 1;
@@ -49,11 +49,18 @@ int main(int argc, char *argv[]) {
 		hist.updateSIDE(samples);
 	}
 
-	// hist.dump(channel);
-	// hist.dumpMID();
-	hist.dumpSIDE();
+	string mode = argv[3];
 
-
+	if(mode=="normal")
+		hist.dump(channel);
+	else if(mode=="mid")
+		hist.dumpMID();
+	else if(mode=="side")
+		hist.dumpSIDE();
+	else{
+		cerr << "Usage: " << argv[0] << " <input file> <channel> <mode={normal,mid,side}>\n";
+		return 1;
+	}
 	return 0;
 }
 

@@ -1,0 +1,11 @@
+To build:
+	make
+
+To test:
+	./Encoder (...)
+	./Decoder (...)
+
+																		
+							
+
+
