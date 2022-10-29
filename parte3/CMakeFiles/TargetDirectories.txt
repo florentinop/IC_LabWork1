@@ -1,0 +1,3 @@
+/home/diogo/repos/IC_ENTREGA/parte3/CMakeFiles/rebuild_cache.dir
+/home/diogo/repos/IC_ENTREGA/parte3/CMakeFiles/edit_cache.dir
+/home/diogo/repos/IC_ENTREGA/parte3/CMakeFiles/wav_encoder.dir

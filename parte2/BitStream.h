@@ -38,7 +38,6 @@ public:
             res = (res == 1 ? '1' : '0');
         }
 
-        
         infile.close();
         
         return res;
@@ -70,7 +69,6 @@ public:
     }
 
     void writeBit(char bit) {
-        
         buffer.push_back(bit);
         if (buffer.size() >= 8) {
             char res = 0;
@@ -81,28 +79,6 @@ public:
             ofstream outfile;
             outfile.open(path, ios::out | ios::app);
             
-            outfile << res;
-            outfile.close();
-        }
-    }
-
-    void writeChar(char bit) {
-        
-        buffer.push_back(bit);
-        if (buffer.size() >= 8) {
-            char res = 0;
-            for (unsigned int i = 0; i < 8; i++) {
-                res |= (buffer[i] << (7-i));
-            }
-            buffer.clear();
-            ofstream outfile;
-            outfile.open(path, ios::out | ios::app);
-            if(res==0){
-            res='0';
-            }
-            if(res==1){
-                res='1';
-            }
             outfile << res;
             outfile.close();
         }

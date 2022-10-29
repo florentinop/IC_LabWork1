@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/diogo/repos/IC_ENTREGA/parte2/BitStream.h
+cstdio
+-
+fstream
+-
+iostream
+-
+vector
+-
+
+/home/diogo/repos/IC_ENTREGA/parte3/wav_encoder.cpp
+iostream
+-
+vector
+-
+cmath
+-
+fftw3.h
+-
+sndfile.hh
+-
+../parte2/BitStream.h
+/home/diogo/repos/IC_ENTREGA/parte2/BitStream.h
+
