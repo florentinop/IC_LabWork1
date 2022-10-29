@@ -15,8 +15,8 @@ int main(int argc, char *argv[]) {
     ofstream writeStream;
     writeStream.open(argv[2]);
 
-    unsigned char res;
-    while ((res = readStream.readBit()) != '2') {
+    char res;
+    while ((res = readStream.readBit()) != -1) {
         writeStream << res;
     }
 

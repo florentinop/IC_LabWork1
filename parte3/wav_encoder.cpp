@@ -139,29 +139,10 @@ int main(int argc, char *argv[]) {
     writeStream.writeBit(nChannels == 2 ? 1 : 0); // first bit of the file will be the number of channels
                                                       // (nChannels = 2^bit)
 
-    // next, write bit format
-    writeStream.writeBits(bitset<4>(bits).to_string());
-
     // then, write samplerate
-    writeStream.writeBits(bitset<19>(sfhIn.samplerate()).to_string());
+    writeStream.writeBits(bitset<23>(sfhIn.samplerate()).to_string());
 
     const clock_t begin = clock();
-
-//    for (auto re: res) {
-//        re >>= 8;
-//        for (unsigned int i = 0; i < 8; i++) {
-//            writeStream.writeBit((re >> (7 - i)) & 1);
-//        }
-//    }
-
-//    for (auto re: res) {
-//        re >>= 8;
-//        vector<char> vec {static_cast<char>((re >> 7) & 1), static_cast<char>((re >> 6) & 1),
-//                          static_cast<char>((re >> 5) & 1), static_cast<char>((re >> 4) & 1),
-//                          static_cast<char>((re >> 3) & 1), static_cast<char>((re >> 2) & 1),
-//                          static_cast<char>((re >> 1) & 1), static_cast<char>(re & 1)};
-//        writeStream.writeBits(vec);
-//    }
 
     // finally, write samples data
     for (auto re: res) {

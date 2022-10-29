@@ -40,28 +40,15 @@ public:
         return res;
     }
 
-    vector<char> readBits(unsigned int n) {
-        vector<char> res;
-        char c = -1;
-        int m = n;
-        ifstream infile;
-        infile.open(path);
-        infile.seekg(bitPointer>>3);
-        for (unsigned int i = 0; i <= n/8; i++, m-=8) {
-            if (infile >> c) {
-                unsigned int numBitsToRead = min(8,m);
-                for (unsigned int j = 0; j < numBitsToRead; j++) {
-                    char ch = c;
-                    ch >>= 7 - (bitPointer % 8);
-                    ch &= 0b00000001;
-                    res.push_back(ch);
-                    bitPointer++;
-                }
-            } else {
-                res.push_back(-1);
+    string readBits(unsigned int n) {
+        string res = "";
+        for (unsigned int i = 0; i < n; i++) {
+            char c = readBit();
+            if (c == -1) {
+                return res;
             }
+            res += (c == 0 ? '0' : '1');
         }
-        infile.close();
         return res;
     }
 

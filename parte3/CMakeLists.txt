@@ -14,6 +14,9 @@ SET (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BASE_DIR})
 add_executable (wav_encoder wav_encoder.cpp)
 TARGET_LINK_LIBRARIES(wav_encoder sndfile fftw3)
 
+add_executable (wav_decoder wav_decoder.cpp)
+TARGET_LINK_LIBRARIES(wav_decoder sndfile)
+
 
 
 
