@@ -130,12 +130,13 @@ int main(int argc, char *argv[]) {
 
     BitStream writeStream {argv[argc-1]};
 
+    const clock_t begin = clock();
+
     writeStream.writeBit(nChannels == 2 ? 1 : 0); // first bit of the file will be the number of channels
 
-    // then, write samplerate
-    writeStream.writeBits(bitset<23>(sfhIn.samplerate()).to_string());
+    writeStream.writeBits(bitset<4>(bits-1).to_string()); // write bits of the quantized signal
 
-    const clock_t begin = clock();
+    writeStream.writeBits(bitset<19>(sfhIn.samplerate()).to_string()); // then, write samplerate
 
 	if (bits != 16) {
         std::vector<short> res(samples.size());
