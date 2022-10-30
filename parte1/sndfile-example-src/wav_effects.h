@@ -27,16 +27,16 @@ class WAVEffects {
 
 	void ApplySingleEcho(short k, double alpha) {
 
-		for(short i = 0; i < k*2; i++)
+		for(int i = 0; i < k*2; i++)
 			SingleEchoSamples.push_back(0);	//apply delay
 
 		for(short s : Samples)			//copy and reduce intensity by alpha
 			SingleEchoSamples.push_back(s*alpha);
 
-		for(short i = 0; i < k*2; i++)
+		for(int i = 0; i < k*2; i++)
 			Samples.push_back(0);	// add space for the delay
 
-		for(short i = 0; i<(short)Samples.size(); i++)
+		for(int i = 0; i<(int)Samples.size(); i++)
 			SingleEchoSamples[i] = (SingleEchoSamples[i] + Samples[i]) / (1+alpha);	//add signals and divide by 1+alpha so that we never saturate the signal
 																	// 1+alpha is the worst case  
 	}

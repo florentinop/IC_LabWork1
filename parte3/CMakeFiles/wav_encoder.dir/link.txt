@@ -1,1 +1,0 @@
-/usr/bin/c++  -Wall -Wextra -std=c++17 -O3 CMakeFiles/wav_encoder.dir/wav_encoder.cpp.o -o wav_encoder  -lsndfile -lfftw3 

@@ -2,8 +2,8 @@ To build:
 	make
 
 To test:
-	./Encoder (...)
-	./Decoder (...)
+	./Encoder text.txt binary.bin 	//read bits from text.txt and write them to binary.bin
+	./Decoder binary.bin text.txt 	//read bits from binary.bin and write them to text.txt  
 
 																		
 							
