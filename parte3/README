@@ -2,10 +2,10 @@ To build:
 	make
 
 To test:
-	./wav_encoder -v -bs 1024 -frac 0.2 -b 8 sample.wav sample.bin // encodes sample.wav file into sample.bin																			   		   // with verbose, blocksize=1024, dct Fraction=0.2,
-																   // and bits=8
+	./wav_encoder [-v] [-bs 1024] [-frac 0.2] -b 8 sample.wav sample.bin // encodes sample.wav file into sample.bin																			   		   // with verbose, blocksize=1024, dct Fraction=0.2,
+																         // and bits=8 (defaults to 16)
 
-	./wav_decoder -v sample.bin novo.wav //decodes sample.bin into novo.wav
+	./wav_decoder [-v] sample.bin new.wav //decodes sample.bin into new.wav
 
 																		
 							
